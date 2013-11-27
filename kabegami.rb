@@ -4,6 +4,7 @@ import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.JButton
 import javax.swing.JOptionPane
+import java.lang.System
 
 APP_NAME = "Kabegami"
 
@@ -44,7 +45,7 @@ class Kabegami < JFrame
                 "Just Checking?",
                 JOptionPane::YES_NO_OPTION)
                 
-      java.lang.System.exit(0) if confirm == JOptionPane::YES_OPTION
+      System.exit 0 if confirm == JOptionPane::YES_OPTION
     end
     
     
