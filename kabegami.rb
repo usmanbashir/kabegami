@@ -32,22 +32,12 @@ class Kabegami < JFrame
     self.getContentPane.add panel
     panel.setLayout nil
     
-    btnClose = JButton.new "Exit"
+    btnClose = JButton.new "Close"
     btnClose.setBounds 170, 120, 100, 30
-    btnClose.setToolTipText "Click to close the application."
+    btnClose.setToolTipText "Click to close this window."
+    btnClose.addActionListener { dispose() }
     
     panel.add btnClose
-    
-    btnClose.addActionListener do |e|
-      confirm = JOptionPane.showConfirmDialog(
-                nil, 
-                "Are you sure dude, you wanna call it a day?",
-                "Just Checking?",
-                JOptionPane::YES_NO_OPTION)
-                
-      System.exit 0 if confirm == JOptionPane::YES_OPTION
-    end
-    
     
     # Everthing is setup, we can render the window now.
     self.setVisible true
