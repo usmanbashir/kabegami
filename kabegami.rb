@@ -18,7 +18,36 @@ class Kabegami < JFrame
 
   def initialize
     super APP_NAME
+    
+    self.initTray
     self.initUI
+  end
+
+  def initTray
+    if SystemTray.isSupported
+      tray          = SystemTray.getSystemTray
+      icon          = Toolkit.getDefaultToolkit.getImage APP_ICON
+
+      popupMenu     = PopupMenu.new
+
+      menuItemExit  = MenuItem.new "Exit"
+      menuItemExit.addActionListener do |e|
+        confirm = JOptionPane.showConfirmDialog(
+                    nil, 
+                    "Are you sure dude, you wanna call it a day?",
+                    "Just Checking?",
+                    JOptionPane::YES_NO_OPTION
+                  )
+
+        System.exit 0 if confirm == JOptionPane::YES_OPTION
+      end
+
+      popupMenu.add menuItemExit
+      
+      trayIcon      = TrayIcon.new icon, APP_NAME, popupMenu
+
+      tray.add trayIcon
+    end
   end
   
   def initUI
@@ -44,35 +73,7 @@ class Kabegami < JFrame
     btnClose.addActionListener { dispose() }
     
     panel.add btnClose
-    
 
-    # Setup the system tray.
-    
-    if SystemTray.isSupported
-      tray          = SystemTray.getSystemTray
-      icon          = Toolkit.getDefaultToolkit.getImage APP_ICON
-
-      popupMenu     = PopupMenu.new
-
-      menuItemExit  = MenuItem.new "Exit"
-      menuItemExit.addActionListener do |e|
-        confirm = JOptionPane.showConfirmDialog(
-                    nil, 
-                    "Are you sure dude, you wanna call it a day?",
-                    "Just Checking?",
-                    JOptionPane::YES_NO_OPTION
-                  )
-
-        System.exit 0 if confirm == JOptionPane::YES_OPTION
-      end
-
-      popupMenu.add menuItemExit
-      
-      trayIcon      = TrayIcon.new icon, APP_NAME, popupMenu
-
-      tray.add trayIcon
-    end
-    
 
     # Everthing is setup, we can render the window now.
     self.setVisible true
